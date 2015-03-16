@@ -73,4 +73,67 @@ class Example extends Module
 		if ($this->active && Configuration::get('EXAMPLE_CONF') == '')
 			$this->warning = $this->l('You have to configure your module');
 	}
+
+	public function install()
+	{
+		// Install SQL
+		$sql = array();
+		include(dirname(__FILE__).'/sql/install.php');
+		foreach ($sql as $s)
+			if (!Db::getInstance()->execute($s))
+				return false;
+
+		// Install Tabs
+		$parent_tab = new Tab();
+		// Need a foreach for the language
+		$parent_tab->name[$this->context->language->id] = $this->l('Main Tab Example');
+		$parent_tab->class_name = 'AdminMainExample';
+		$parent_tab->id_parent = 0; // Home tab
+		$parent_tab->module = $this->name;
+		$parent_tab->add();
+
+		$tab = new Tab();
+		// Need a foreach for the language
+		$tab->name[$this->context->language->id] = $this->l('Tab Example');
+		$tab->class_name = 'AdminExample';
+		$tab->id_parent = $parent_tab->id;
+		$tab->module = $this->name;
+		$tab->add();
+
+		//Init
+		Configuration::updateValue('EXAMPLE_CONF', '');
+
+		// Install Module
+		// In this part, you don't need to add a hook in database, even if it's a new one.
+		// The registerHook method will do it for your !
+		return parent::install() && $this->registerHook('actionObjectExampleDataAddAfter');
+	}
+
+	public function uninstall()
+	{
+		// Uninstall SQL
+		$sql = array();
+		include(dirname(__FILE__).'/sql/uninstall.php');
+		foreach ($sql as $s)
+			if (!Db::getInstance()->execute($s))
+				return false;
+
+		Configuration::deleteByName('EXAMPLE_CONF');
+
+		// Uninstall Tabs
+		$tab = new Tab((int)Tab::getIdFromClassName('AdminExample'));
+		$tab->delete();
+
+		$tab_main = new Tab((int)Tab::getIdFromClassName('AdminMainExample'));
+		$tab_main->delete();
+
+		// Uninstall Module
+		if (!parent::uninstall())
+			return false;
+
+		// You don't need to call this one because uninstall do it for you
+		// !$this->unregisterHook('actionObjectExampleDataAddAfter')
+
+		return true;
+	}
 }
