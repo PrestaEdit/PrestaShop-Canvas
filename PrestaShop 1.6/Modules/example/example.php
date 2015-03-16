@@ -136,4 +136,12 @@ class Example extends Module
 
 		return true;
 	}
+
+	public function hookActionObjectExampleDataAddAfter($params)
+	{
+		/* Do something here... */
+		$params = $params;
+
+		return true;
+	}
 }
