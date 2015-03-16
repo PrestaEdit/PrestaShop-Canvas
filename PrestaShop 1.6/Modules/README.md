@@ -1,2 +1,2 @@
-# PrestaShop-Canvas
-Canvas pour PrestaShop
+# Canvas de module pour PrestaShop 1.6
+
