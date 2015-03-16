@@ -1,0 +1,6 @@
+[submodule "Canvas-Module-Prestashop-15"]
+	path = Canvas-Module-Prestashop-15
+	url = https://github.com/PrestaEdit/Canvas-Module-Prestashop-15.git
+[submodule "PrestaShop 1.5/Modules"]
+	path = PrestaShop 1.5/Modules
+	url = https://github.com/PrestaEdit/Canvas-Module-Prestashop-15.git
