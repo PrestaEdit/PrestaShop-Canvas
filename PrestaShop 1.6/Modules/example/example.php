@@ -29,7 +29,6 @@ if (!defined('_PS_VERSION_'))
 
 class Example extends Module
 {
-
 	public function __construct()
 	{
 		// Author of the module
