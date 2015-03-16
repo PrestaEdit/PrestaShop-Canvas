@@ -27,14 +27,14 @@
 if (!defined('_PS_VERSION_'))
 	exit;
 
-class Example extends Module
+class Simple extends Module
 {
 	public function __construct()
 	{
 		// Author of the module
 		$this->author = 'PrestaEdit';
 		// Name of the module ; the same that the directory and the module ClassName
-		$this->name = 'example';
+		$this->name = 'simple';
 		// Tab where it's the module (administration, front_office_features, ...)
 		$this->tab = 'others';
 		// Current version of the module
@@ -63,7 +63,7 @@ class Example extends Module
 		parent::__construct();
 
 		// Name in the modules list
-		$this->displayName = $this->l('Example');
+		$this->displayName = $this->l('Simple (Example)');
 		// A little description of the module
 		$this->description = $this->l('Module Example');
 
