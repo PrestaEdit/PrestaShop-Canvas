@@ -51,32 +51,9 @@ class HelperList_Positions extends Module
 		$this->description = $this->l('HelperList with Positions Example');
 	}
 
-	public function install()
 	{
-		// Install SQL
-		$sql = array();
-		include(dirname(__FILE__).'/sql/install.php');
-		foreach ($sql as $s)
-			if (!Db::getInstance()->execute($s))
-				return false;
-
-		// Install Module
-		return parent::install();
 	}
 
-	public function uninstall()
 	{
-		// Uninstall SQL
-		$sql = array();
-		include(dirname(__FILE__).'/sql/uninstall.php');
-		foreach ($sql as $s)
-			if (!Db::getInstance()->execute($s))
-				return false;
-
-		// Uninstall Module
-		if (!parent::uninstall())
-			return false;
-
-		return true;
 	}
 }
