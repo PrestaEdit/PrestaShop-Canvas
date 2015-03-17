@@ -45,13 +45,18 @@ class HelperList_Positions extends Module
 
 		parent::__construct();
 
+		// Permet de prendre le style "bootstrap" de la version 1.6 de PrestaShop
+		$this->bootstrap = true;
+
 		// Name in the modules list
 		$this->displayName = $this->l('HelperList_Positions (Example)');
 		// A little description of the module
 		$this->description = $this->l('HelperList with Positions Example');
 	}
 
+	public function getContent()
 	{
+	}
 	}
 
 	{
