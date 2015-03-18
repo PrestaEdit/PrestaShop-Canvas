@@ -41,9 +41,12 @@ class HelperList_Positions extends Module
 		$this->version = '1.0.0';
 
 		//	Min version of PrestaShop wich the module can be install
-		$this->ps_versions_compliancy['min'] = '1.6';
+		$this->ps_versions_compliancy['min'] = '1.6.1.0'; // En fait, la version qui prendra en charge ce PR: https://github.com/PrestaShop/PrestaShop/pull/2686
 
 		parent::__construct();
+
+		// Permet de prendre le style "bootstrap" de la version 1.6 de PrestaShop
+		$this->bootstrap = true;
 
 		// Name in the modules list
 		$this->displayName = $this->l('HelperList_Positions (Example)');
@@ -51,32 +54,84 @@ class HelperList_Positions extends Module
 		$this->description = $this->l('HelperList with Positions Example');
 	}
 
-	public function install()
+	public function getContent()
 	{
-		// Install SQL
-		$sql = array();
-		include(dirname(__FILE__).'/sql/install.php');
-		foreach ($sql as $s)
-			if (!Db::getInstance()->execute($s))
-				return false;
+		if (Tools::isSubmit('updatePositions'))
+			$this->updatePositionsDnd();
 
-		// Install Module
-		return parent::install();
+		$helper = new HelperList();
+
+		// Obligatoire
+		$helper->shopLinkType = '';
+
+
+		// Obligatoire. Correspondant souvent à id_*
+		$helper->identifier = 'id_example_data';
+
+		// Permet de ne pas afficher le header complet.
+		$helper->simple_header = true;
+
+		//
+		$helper->module = $this;
+
+		// Important.
+		$helper->token = Tools::getAdminTokenLite('AdminModules');
+
+		// Permet de définir le champ sur lequel est associé les positions.
+		$helper->position_identifier = 'position';
+
+		// Si utilisation des positions, obligatoire.
+		$helper->orderBy = 'position';
+		$helper->orderWay = 'ASC';
+
+		// Permet de définir l'ID de la table. Le terme "module-" en préfixe est TRES important.
+		$helper->table_id = 'module-helperlist_positions';
+		// Ou encore
+		$helper->table_id = 'module-'.$this->name;
+
+		// Permet de récupérer les champs/headers de la liste. On passe par une méthode, par lisitibilité du code.
+		$fields_list = $this->getListHeader();
+		// Permet de récupérer les enregistrements/lignes de la liste. On passe par une méthode, par lisibilité du code.
+		$values = $this->getListValues();
+
+		return $helper->generateList($values, $fields_list);
 	}
 
-	public function uninstall()
+	private function getListHeader()
 	{
-		// Uninstall SQL
-		$sql = array();
-		include(dirname(__FILE__).'/sql/uninstall.php');
-		foreach ($sql as $s)
-			if (!Db::getInstance()->execute($s))
-				return false;
+		$fields_list = array();
 
-		// Uninstall Module
-		if (!parent::uninstall())
-			return false;
+		$fields_list['id_example_data'] = array(
+			'title' => $this->l('ID')
+		);
 
-		return true;
+		$fields_list['lorem'] = array(
+			'title' => $this->l('Lorem')
+		);
+
+		$fields_list['position'] = array(
+			'title' => $this->l('Position'),
+			'position' => 'true' // Permet de définir le fait que le champ est lié aux positions (et avoir le Drag & Drop)
+		);
+
+		return $fields_list;
+	}
+
+	private function getListValues()
+	{
+		$values = array();
+
+		$values[] = array('id_example_data' => 1, 'lorem' => 'Ipsum 01', 'position' => 1);
+		$values[] = array('id_example_data' => 2, 'lorem' => 'Ipsum 02', 'position' => 2);
+		$values[] = array('id_example_data' => 3, 'lorem' => 'Ipsum 03', 'position' => 3);
+
+		return $values;
+	}
+
+	private function updatePositionsDnd()
+	{
+		$positions = Tools::getValue('module-helperlist_positions');
+
+		ddd($positions);
 	}
 }
