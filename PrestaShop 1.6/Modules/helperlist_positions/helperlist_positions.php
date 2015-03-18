@@ -41,7 +41,7 @@ class HelperList_Positions extends Module
 		$this->version = '1.0.0';
 
 		//	Min version of PrestaShop wich the module can be install
-		$this->ps_versions_compliancy['min'] = '1.6.1.0';
+		$this->ps_versions_compliancy['min'] = '1.6.1.0'; // En fait, la version qui prendra en charge ce PR: https://github.com/PrestaShop/PrestaShop/pull/2686
 
 		parent::__construct();
 
