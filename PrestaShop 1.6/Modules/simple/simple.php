@@ -30,6 +30,8 @@ if (!defined('_PS_VERSION_')) {
 
 class Simple extends Module
 {
+    private $errors = null;
+
     public function __construct()
     {
         // Author of the module
@@ -145,6 +147,33 @@ class Simple extends Module
         // !$this->unregisterHook('actionObjectExampleDataAddAfter')
 
         return true;
+    }
+
+    public function getContent()
+    {
+        $output = '';
+
+        if (Tools::isSubmit('submit'.Tools::ucfirst($this->name))) {
+            $example_conf = Tools::getValue('EXAMPLE_CONF');
+            Configuration::updateValue('EXAMPLE_CONF', $example_conf);
+            if (isset($this->errors) && count($this->errors)) {
+                $output .= $this->displayError(implode('<br />', $this->errors));
+            } else {
+                $output .= $this->displayConfirmation($this->l('Settings updated'));
+            }
+        }
+        return $output.$this->displayForm();
+    }
+    public function displayForm()
+    {
+        $this->context->smarty->assign('request_uri', Tools::safeOutput($_SERVER['REQUEST_URI']));
+        $this->context->smarty->assign('path', $this->_path);
+        $this->context->smarty->assign('EXAMPLE_CONF', pSQL(Tools::getValue('EXAMPLE_CONF', Configuration::get('EXAMPLE_CONF'))));
+        $this->context->smarty->assign('submitName', 'submit'.Tools::ucfirst($this->name));
+        $this->context->smarty->assign('errors', $this->errors);
+
+        // You can return html, but I prefer this new version: use smarty in admin, :)
+        return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }
 
     public function hookActionObjectExampleDataAddAfter($params)
