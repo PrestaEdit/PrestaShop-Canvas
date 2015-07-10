@@ -44,7 +44,7 @@ class Simple extends Module
         // Tab where it's the module (administration, front_office_features, ...)
         $this->tab = 'others';
         // Current version of the module
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
 
         //  Min version of PrestaShop wich the module can be install
         $this->ps_versions_compliancy['min'] = '1.6';
