@@ -50,6 +50,8 @@ class AdminExampleController extends ModuleAdminController
         // définition de l'upload, chemin par défaut _PS_IMG_DIR_
         $this->fieldImageSettings = array('name' => 'image', 'dir' => 'example');
 
+        $this->bootstrap = true;
+
         parent::__construct();
     }
 
