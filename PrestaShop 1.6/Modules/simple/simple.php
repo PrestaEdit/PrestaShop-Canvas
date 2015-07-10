@@ -28,6 +28,9 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+/* Loading Models */
+require_once(_PS_MODULE_DIR_.'simple/models/ExampleData.php');
+
 class Simple extends Module
 {
     private $errors = null;
