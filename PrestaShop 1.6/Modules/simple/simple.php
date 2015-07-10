@@ -32,7 +32,7 @@ class Simple extends Module
 	public function __construct()
 	{
 		// Author of the module
-		$this->author = 'PrestaEdit';
+		$this->author = 'Author';
 		// Name of the module ; the same that the directory and the module ClassName
 		$this->name = 'simple';
 		// Tab where it's the module (administration, front_office_features, ...)
