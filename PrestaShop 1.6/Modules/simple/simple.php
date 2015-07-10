@@ -43,7 +43,7 @@ class Simple extends Module
 		//	Min version of PrestaShop wich the module can be install
 		$this->ps_versions_compliancy['min'] = '1.6';
 		// Max version of PrestaShop wich the module can be install
-		$this->ps_versions_compliancy['max'] = PS_VERSION;
+		$this->ps_versions_compliancy['max'] = _PS_VERSION_;
 		// OR $this->ps_versions_compliancy = array('min' => '1.5', 'max' => '1.6');
 
 		//	The need_instance flag indicates whether to load the module's class when displaying the "Modules" page
