@@ -27,20 +27,20 @@
 	<div class="error">
 		<ul>
 			{foreach from=$errors item=error}
-				<li>{$error}</li>
+				<li>{$error|escape:'htmlall':'UTF-8'}</li>
 			{/foreach}
 		</ul>
 	</div>
 {/if}
 
-<form action="{$request_uri}" method="post">
+<form action="{$request_uri|escape:'htmlall':'UTF-8'}" method="post">
 	<fieldset>
-		<legend><img src="{$path}logo.gif" alt="" title="" />{l s='Settings' mod='example'}</legend>
-		<label>{l s='Your label' mod='example'}</label>
+		<legend><img src="{$path|escape:'htmlall':'UTF-8'}logo.gif" alt="" title="" />{l s='Settings' mod='simple'}</legend>
+		<label>{l s='Your label' mod='simple'}</label>
 		<div class="margin-form">
-			<input type="text" size="20" name="EXAMPLE_CONF" value="{$EXAMPLE_CONF}" />
-			<p class="clear">{l s='e.g. something' mod='example'}</p>
+			<input type="text" size="20" name="EXAMPLE_CONF" value="{$EXAMPLE_CONF|escape:'htmlall':'UTF-8'}" />
+			<p class="clear">{l s='e.g. something' mod='simple'}</p>
 		</div>
-		<center><input type="submit" name="{$submitName}" value="{l s='Save' mod='example'}" class="button" /></center>
+		<center><input type="submit" name="{$submitName|escape:'htmlall':'UTF-8'}" value="{l s='Save' mod='simple'}" class="button" /></center>
 	</fieldset>
 </form>
